@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 2019_03_06_151030) do
   create_table "users_events", force: :cascade do |t|
     t.integer "user_id"
     t.integer "event_id"
-    t.boolean "rsvp"
+    t.string "rsvp"
     t.string "status"
   end
 
