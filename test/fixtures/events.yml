@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  start_time: 2019-03-06 20:37:33
+  end_time: 2019-03-06 20:37:33
+  description: MyString
+  all_day: false
+
+two:
+  title: MyString
+  start_time: 2019-03-06 20:37:33
+  end_time: 2019-03-06 20:37:33
+  description: MyString
+  all_day: false
