@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2019_03_06_151030) do
     t.datetime "end_time"
     t.string "description"
     t.boolean "all_day"
+    t.text "rsvps"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -37,7 +38,6 @@ ActiveRecord::Schema.define(version: 2019_03_06_151030) do
     t.integer "user_id"
     t.integer "event_id"
     t.string "rsvp"
-    t.string "status"
   end
 
 end
