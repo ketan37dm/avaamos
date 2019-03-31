@@ -9,15 +9,12 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
   encoding: unicode
-  username: postgres
-  password: postgres
 
 development:
   <<: *default
   host: localhost
   database: avaamos_development
-  username: postgres
-  password: postgres
+  username: ketanPC
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -26,8 +23,7 @@ test:
   <<: *default
   host: localhost
   database: avaamos_test
-  username: postgres
-  password: postgres
+  username: ketanPC
 
 production:
   <<: *default

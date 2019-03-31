@@ -6,7 +6,7 @@ class CreateEvents < ActiveRecord::Migration[5.2]
       t.datetime :end_time
       t.string :description
       t.boolean :all_day
-
+      t.text :rsvps
       t.timestamps
     end
   end
