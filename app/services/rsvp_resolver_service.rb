@@ -1,18 +1,20 @@
 class RsvpResolverService
   def execute
-    sorted_events.each do |current_event|
-      hashed_rsvps = current_event.hashed_rsvps
-      users = User.where(username: hashed_rsvps.keys)
-      users.each do |user|
-        rsvp = hashed_rsvps[user.username]
-        registration = Registration.create(user: user, event: current_event, rsvp: rsvp)
-        if rsvp == 'yes'
-          latest_reg = Registration.includes(:event).find_by(id: user.latest_reg_id)
-          if latest_reg && overlapping_events?(latest_reg.event, current_event)
-            latest_reg.update_attributes(rsvp: 'no')
-          end 
-          user.update_latest_reg_id(registration.id)
-        end
+    sorted_events.find_in_batches(batch_size: 500).each do |batch|
+      batch.each do |current_event|
+        hashed_rsvps = current_event.hashed_rsvps
+        users = User.where(username: hashed_rsvps.keys)
+        users.each do |user|
+          rsvp = hashed_rsvps[user.username]
+          registration = Registration.create(user: user, event: current_event, rsvp: rsvp)
+          if rsvp == 'yes'
+            latest_reg = Registration.includes(:event).find_by(id: user.latest_reg_id)
+            if latest_reg && overlapping_events?(latest_reg.event, current_event)
+              latest_reg.update_attributes(rsvp: 'no')
+            end 
+            user.update_latest_reg_id(registration.id)
+          end
+        end 
       end 
     end 
   end 

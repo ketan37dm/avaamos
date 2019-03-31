@@ -9,11 +9,19 @@ class User < ApplicationRecord
 
   has_many :registrations
   has_many :events, through: :registrations
-
   has_many :yes_events, 
         -> { where "registrations.rsvp = 'yes'" },
         through: :registrations,
         source: :event
+  has_many :no_events, 
+        -> { where "registrations.rsvp = 'no'" },
+        through: :registrations,
+        source: :event
+  has_many :maybe_events, 
+        -> { where "registrations.rsvp = 'maybe'" },
+        through: :registrations,
+        source: :event
+
 
   def latest_reg_id
     Rails.cache.read("user:#{self.id}:latest_reg_id")
