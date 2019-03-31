@@ -22,6 +22,7 @@ rails db:migrate
 rails db:seed
 ```
 1. Seed file seeds the users and events table
+    1.1 If we get erroneous input, we create a `user_errors.csv` Or `event_errors.csv` file under `tmp/seed_data` that shows what errors were with the input
 2. `RsvpResolverService` is responsible for storing the rsvps for given event
 
 ## Optimizations 
