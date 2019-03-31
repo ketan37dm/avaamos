@@ -1,9 +1,12 @@
 require 'csv'
+require 'fileutils'
+
+FileUtils.mkdir('tmp/seed_data') unless File.exists?('tmp/seed_data')
 
 USER_FILEPATH = 'db/seed_data/users.csv'
-USER_ERRORS_FILEPATH = 'db/seed_data/users_errors.csv'
+USER_ERRORS_FILEPATH = 'tmp/seed_data/users_errors.csv'
 EVENT_FILEPATH = 'db/seed_data/events.csv'
-EVENT_ERRORS_FILEPATH = 'db/seed_data/event_errors.csv'
+EVENT_ERRORS_FILEPATH = 'tmp/seed_data/event_errors.csv'
 
 class UserCreationError < StandardError; end
 class EventCreationError < StandardError; end 
@@ -58,4 +61,5 @@ end
 
 populate_user
 populate_event
+RsvpResolverService.new.execute
 

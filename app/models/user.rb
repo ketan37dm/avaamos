@@ -10,6 +10,14 @@ class User < ApplicationRecord
   has_many :users_events
   has_many :events, through: :users_events
 
+  def latest_yes_event_id
+    Rails.cache.fetch("user:#{id}:latest_yes_event_id")
+  end 
+
+  def update_latest_yes_event_id(id)
+    Rails.cache.write("user:#{id}:latest_yes_event_id", id, expires_in: 1.hour)
+  end 
+
   private 
 
   def phone_number_with_phony
