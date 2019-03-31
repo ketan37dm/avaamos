@@ -7,15 +7,29 @@ class User < ApplicationRecord
 
   validate :phone_number_with_phony
 
-  has_many :users_events
-  has_many :events, through: :users_events
+  has_many :registrations
+  has_many :events, through: :registrations
 
-  def latest_yes_event_id
-    Rails.cache.fetch("user:#{id}:latest_yes_event_id")
+  has_many :yes_events, 
+        -> { where "registrations.rsvp = 'yes'" },
+        through: :registrations,
+        source: :event
+
+  # has_many :invitees, 
+  #       ->{ where "invites.accepted = false" }, 
+  #       through: :invites, 
+  #       source: :user
+  # has_many :participants, 
+  #       ->{ where "invites.accepted = true" },
+  #       through: :invites, 
+  #       source: :user  
+
+  def latest_reg_id
+    Rails.cache.read("user:#{id}:latest_reg_id")
   end 
 
-  def update_latest_yes_event_id(id)
-    Rails.cache.write("user:#{id}:latest_yes_event_id", id, expires_in: 1.hour)
+  def update_latest_reg_id(id)
+    Rails.cache.write("user:#{id}:latest_reg_id", id, expires_in: 1.hour)
   end 
 
   private 

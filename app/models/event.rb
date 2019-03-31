@@ -8,8 +8,8 @@ class Event < ApplicationRecord
 
   validate :event_timings
 
-  has_many :users_events
-  has_many :users, through: :users_events
+  has_many :registrations
+  has_many :users, through: :registrations
 
   def hashed_rsvps
     return {} unless rsvps

@@ -26,18 +26,18 @@ ActiveRecord::Schema.define(version: 2019_03_06_151030) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "registrations", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "event_id"
+    t.string "rsvp"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "email"
     t.string "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "users_events", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "event_id"
-    t.string "rsvp"
   end
 
 end
