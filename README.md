@@ -1,24 +1,38 @@
-# README
+# Event Manager
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Task : https://docs.google.com/document/d/1yVknzIIKOFOwIOMHB1hKgQiKPq3qr2rMxlSXBPT5HcM/edit#
 
-Things you may want to cover:
+## Assumptions
 
-* Ruby version
+- Given : a user having multiple events at the same time can not have rsvp as `yes` for more than one overlapping events. In such case consider the rsvp of last overlapping event to be `yes`
+- - Inference : In case of overlapping events, `last` overlapping is the one that starts last
 
-* System dependencies
+- Given : End datetime should be ignored if event is an all day event
+- - Inference : For an all day event, only consider the `end_date` but ignore the `end_time` on that same day
 
-* Configuration
+- Event
+    - user#rsvp column can fit in text
+    - user#rsvp input is valid, meaning same username will not be used twice. In case it is repeated, the last entry will be considered
+- CSV processing within 1 hour as Cache expires at that time
 
-* Database creation
+## Workflow
+```ruby
+rails db:create
+rails db:migrate
+rails db:seed
+```
+1. Seed file seeds the users and events table
+    1.1 If we get erroneous input, we create a `user_errors.csv` Or `event_errors.csv` file under `tmp/seed_data` that shows what errors were with the input
+2. `RsvpResolverService` is responsible for storing the rsvps for given event
 
-* Database initialization
+## Optimizations Implemented
 
-* How to run the test suite
+1. Processing events in increasing order of `starttime` saves a lot of queries as we will only compare the current event in computation with the last one that was processed for user in consideration
+2. Used redis for storing the last event that got processed to save on hitting the database
+3. Used eager loading wherever necessary
+4. Added necessary indexes
 
-* Services (job queues, cache servers, search engines, etc.)
+## Limitations
 
-* Deployment instructions
-
-* ...
+1. Current implementation can be used only for the initial seeding (i.e. when there is no data in the DB and for only 1 CSV file)
+2. We shall have to add few more supportive methods to make it work for multiple CSV uploads
