@@ -1,5 +1,7 @@
 # Event Manager
 
+Task : https://docs.google.com/document/d/1yVknzIIKOFOwIOMHB1hKgQiKPq3qr2rMxlSXBPT5HcM/edit#
+
 ## Assumptions
 
 - Given : a user having multiple events at the same time can not have rsvp as `yes` for more than one overlapping events. In such case consider the rsvp of last overlapping event to be `yes`
