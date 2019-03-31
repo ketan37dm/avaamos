@@ -15,21 +15,12 @@ class User < ApplicationRecord
         through: :registrations,
         source: :event
 
-  # has_many :invitees, 
-  #       ->{ where "invites.accepted = false" }, 
-  #       through: :invites, 
-  #       source: :user
-  # has_many :participants, 
-  #       ->{ where "invites.accepted = true" },
-  #       through: :invites, 
-  #       source: :user  
-
   def latest_reg_id
-    Rails.cache.read("user:#{id}:latest_reg_id")
+    Rails.cache.read("user:#{self.id}:latest_reg_id")
   end 
 
-  def update_latest_reg_id(id)
-    Rails.cache.write("user:#{id}:latest_reg_id", id, expires_in: 1.hour)
+  def update_latest_reg_id(reg_id)
+    Rails.cache.write("user:#{self.id}:latest_reg_id", reg_id, expires_in: 1.hour)
   end 
 
   private 

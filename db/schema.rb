@@ -22,14 +22,17 @@ ActiveRecord::Schema.define(version: 2019_03_06_151030) do
     t.string "description"
     t.boolean "all_day"
     t.text "rsvps"
+    t.boolean "completed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["start_time"], name: "index_events_on_start_time"
   end
 
   create_table "registrations", force: :cascade do |t|
     t.integer "user_id"
     t.integer "event_id"
     t.string "rsvp"
+    t.index ["user_id", "event_id"], name: "index_registrations_on_user_id_and_event_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -38,6 +41,7 @@ ActiveRecord::Schema.define(version: 2019_03_06_151030) do
     t.string "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["username"], name: "index_users_on_username"
   end
 
 end

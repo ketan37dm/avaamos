@@ -41,6 +41,7 @@ class EventCreationError < StandardError; end
 		  		attrs['description'] = row['description']
 		  		attrs['rsvps'] = row['users#rsvp']
 		  		attrs['all_day'] = (row['allday'] == 'TRUE')
+          attrs['completed'] = (row['endtime'] < Time.now)
 		  	else 
 		  		attrs = row
 		  	end 
