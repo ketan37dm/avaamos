@@ -23,7 +23,7 @@ rails db:seed
 ```
 1. Seed file seeds the users and events table
     1.1 If we get erroneous input, we create a `user_errors.csv` Or `event_errors.csv` file under `tmp/seed_data` that shows what errors were with the input
-2. `RsvpResolverService` is responsible for storing the rsvps for given event
+2. `RsvpResolverService` is responsible for creating Registrations as per the given rsvps
 
 ## Optimizations Implemented
 
@@ -31,6 +31,10 @@ rails db:seed
 2. Used redis for storing the last event that got processed to save on hitting the database
 3. Used eager loading wherever necessary
 4. Added necessary indexes
+
+## Specs
+
+I have added specs for `RsvpResolverService` as of now (usgin RSpec). Further specs can be added to test the validations, etc. 
 
 ## Limitations
 
